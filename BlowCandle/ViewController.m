@@ -9,18 +9,33 @@
 #import "ViewController.h"
 @import AVFoundation;
 
-#define THRESHOLD 75
+#define THRESHOLD -0.04
 
 @implementation ViewController {
     AVAudioRecorder *recorder;
     double lowPassResults;
     NSTimer *levelTimer;
-    IBOutlet UISlider *progressView;
-    IBOutlet UILabel *lblDone;
+    IBOutlet UIImageView *imgViewflame;
+    NSMutableArray *arrayLow, *arraySmoke;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    arrayLow = [NSMutableArray new];
+    for (int i = 0; i < 75; i++) {
+        NSString *imgName = [NSString stringWithFormat:@"flame_low_%d", i];
+        NSLog(@"low %@", imgName);
+        [arrayLow addObject:[UIImage imageNamed:imgName]];
+    }
+    
+    arraySmoke = [NSMutableArray new];
+    for (int i = 1; i < 30; i++) {
+        NSString *imgName = [NSString stringWithFormat:@"flame_smoke_0%d", i];
+        NSLog(@"smoke %@", imgName);
+        [arraySmoke addObject:[UIImage imageNamed:imgName]];
+    }
+
     
     lowPassResults = 0.0;
     [self readyToBlow1];
@@ -52,24 +67,40 @@
 }
 
 - (void)readyToBlow1 {
-    [progressView setValue:0.];
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
     [[AVAudioSession sharedInstance] setActive:YES error:nil];
 }
 
 - (void)levelTimerCallback:(NSTimer *)timer {
     [recorder updateMeters];
-    const double ALPHA = 0.05;
-    double peakPowerForChannel = pow(10, (0.05 * [recorder peakPowerForChannel:0]));
-    lowPassResults = ALPHA * peakPowerForChannel + (1.0 - ALPHA) * lowPassResults;
-    CGFloat percentage = lowPassResults*10000/THRESHOLD;
-    NSLog(@"lowPassResults %lf, percentage %lf", lowPassResults, percentage);
-    [progressView setValue:percentage];
-    if (percentage > 100.) {
-        NSLog(@"Candle blow off");
-        lblDone.hidden = NO;
-        [levelTimer invalidate];
+    
+    float peakPower = [recorder peakPowerForChannel:0];
+    NSLog(@"power = %f", peakPower);
+    
+    if (peakPower > -3) {
+        [self setImageLow];
+        if (peakPower > THRESHOLD) {
+            NSLog(@"Candle blow off");
+//            [levelTimer invalidate];
+            [self setImageSmoke];
+        }
     }
+}
+
+- (void)setImageLow {
+    NSLog(@"Low");
+    if (!imgViewflame.isAnimating) {
+        [imgViewflame setAnimationImages:arrayLow];
+        [imgViewflame setAnimationRepeatCount:1];
+        [imgViewflame startAnimating];
+    }
+}
+
+- (void)setImageSmoke {
+    NSLog(@"Smoke");
+    [imgViewflame setAnimationImages:arraySmoke];
+    [imgViewflame setAnimationRepeatCount:2];
+    [imgViewflame startAnimating];
 }
 
 @end
