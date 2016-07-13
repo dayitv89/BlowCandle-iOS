@@ -18,22 +18,22 @@
     [super viewDidLoad];
     
     arrayLow = [NSMutableArray new];
-    for (int i = 0; i < 75; i++) {
-        NSString *imgName = [NSString stringWithFormat:@"flame_low_%d", i];
+    for (int i = 1; i <= 25; i++) {
+        NSString *imgName = [NSString stringWithFormat:@"flame_%d", i];
         NSLog(@"low %@", imgName);
         [arrayLow addObject:[UIImage imageNamed:imgName]];
     }
     
     arraySmoke = [NSMutableArray new];
-    for (int i = 1; i < 30; i++) {
-        NSString *imgName = [NSString stringWithFormat:@"flame_smoke_0%d", i];
+    for (int i = 1; i <= 39; i++) {
+        NSString *imgName = [NSString stringWithFormat:@"smoke_%d", i];
         NSLog(@"smoke %@", imgName);
         [arraySmoke addObject:[UIImage imageNamed:imgName]];
     }
 
     CandleAnimation *candleAnimation = [CandleAnimation new];
     [candleAnimation setFlame:imgViewflame
-                 stableImages:@[[UIImage imageNamed:@"flame_full_0"]]
+                 stableImages:@[[UIImage imageNamed:@"flame_1"]]
                    blowImages:arrayLow
                   smokeImages:arraySmoke];
     [candleAnimation startAnimations:^{

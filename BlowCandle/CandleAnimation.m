@@ -71,6 +71,7 @@
     NSLog(@"Blow");
     if (!self.imgViewFlame.isAnimating) {
         [self.imgViewFlame setAnimationImages:self.arrBlowImages];
+        [self.imgViewFlame setAnimationDuration:4.0];
         [self.imgViewFlame setAnimationRepeatCount:1];
         [self.imgViewFlame startAnimating];
     }
@@ -79,9 +80,9 @@
 - (void)setImageSmoke {
     NSLog(@"Smoke");
     [self.imgViewFlame setImage:self.arrSmokeImages[self.arrSmokeImages.count-1]];
-    
     [self.imgViewFlame setAnimationImages:self.arrSmokeImages];
-    [self.imgViewFlame setAnimationRepeatCount:2];
+    [self.imgViewFlame setAnimationDuration:4.0];
+    [self.imgViewFlame setAnimationRepeatCount:1];
     [self.imgViewFlame startAnimating];
 }
 
