@@ -9,13 +9,13 @@
 #import <Foundation/Foundation.h>
 @import AVFoundation;
 
-@protocol MicrophoneBlowDelegate <NSObject>
+typedef NS_ENUM(NSUInteger, MicrophoneBlowState) {
+    kFlameLidStable,
+    kFlameLidMovement,
+    kFlameLidOff
+};
 
-- (void)candleLidStable;
-- (void)candleLidMoments;
-- (void)candleLidOff;
-
-@end
+typedef void(^StateCompletion)(MicrophoneBlowState state);
 
 @interface MicrophoneBlow : NSObject {
         AVAudioRecorder *recorder;
@@ -23,11 +23,9 @@
         NSTimer *levelTimer;
 }
 
-@property (nonatomic, strong) id<MicrophoneBlowDelegate> delegate;
-
 - (void)setThreshold:(CGFloat)value;
 - (void)prepare;
-- (void)start:(CGFloat)frequency;
+- (void)start:(CGFloat)frequency andCompletions:(StateCompletion)completion;
 - (void)stop;
 
 @end

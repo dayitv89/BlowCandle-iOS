@@ -9,7 +9,7 @@
 #import "CandleAnimation.h"
 #import "MicrophoneBlow.h"
 
-@interface CandleAnimation () <MicrophoneBlowDelegate> {
+@interface CandleAnimation () {
     MicrophoneBlow *microphoneBlow;
     myCompletion completion;
 }
@@ -35,27 +35,26 @@
 }
 
 - (void)startAnimations:(myCompletion)complete {
-    microphoneBlow = [[MicrophoneBlow alloc] init];
-    [microphoneBlow setDelegate:self];
-    [microphoneBlow prepare];
-    [microphoneBlow start:0.1f];
     completion = complete;
-}
-
-#pragma mark - MicrophoneBlowDelegate
-- (void)candleLidStable {
-    [self setImageStable];
-}
-
-- (void)candleLidMoments {
-    [self setImageBlow];
-}
-
-- (void)candleLidOff {
-    if (completion) {
-        completion();
-    }
-    [self setImageSmoke];
+    microphoneBlow = [[MicrophoneBlow alloc] init];
+    [microphoneBlow prepare];
+    [microphoneBlow start:0.1f
+           andCompletions:^(MicrophoneBlowState state) {
+        switch (state) {
+            case kFlameLidStable:
+                [self setImageStable];
+                break;
+            case kFlameLidMovement:
+                [self setImageBlow];
+                break;
+            case kFlameLidOff:
+                if (completion) {
+                    completion();
+                }
+                [self setImageSmoke];
+                break;
+        }
+    }];
 }
 
 #pragma mark - Animation images
@@ -81,13 +80,9 @@
     NSLog(@"Smoke");
     [self.imgViewFlame setImage:self.arrSmokeImages[self.arrSmokeImages.count-1]];
     
-    NSTimeInterval animationTime = 2;
     [self.imgViewFlame setAnimationImages:self.arrSmokeImages];
     [self.imgViewFlame setAnimationRepeatCount:2];
-    [self.imgViewFlame setAnimationDuration:animationTime];
     [self.imgViewFlame startAnimating];
-    
-    
 }
 
 @end

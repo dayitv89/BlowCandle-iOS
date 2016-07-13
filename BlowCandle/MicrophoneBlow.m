@@ -10,6 +10,7 @@
 
 @implementation MicrophoneBlow {
     CGFloat THRESHOLD;
+    StateCompletion completionBlock;
 }
 
 #pragma mark - Public Methods
@@ -42,7 +43,8 @@
     }
 }
 
-- (void)start:(CGFloat)frequency {
+- (void)start:(CGFloat)frequency andCompletions:(StateCompletion)completion {
+    completionBlock = completion;
     [recorder record];
     levelTimer = [NSTimer scheduledTimerWithTimeInterval:frequency
                                                   target:self
@@ -66,20 +68,20 @@
     
     if (peakPower > -3) {
         NSLog(@"Candle blow moments");
-        if (self.delegate) {
-            [self.delegate candleLidMoments];
+        if (completionBlock) {
+            completionBlock(kFlameLidMovement);
         }
         if (peakPower > THRESHOLD) {
             NSLog(@"Candle blow off");
             [self stop];
-            if (self.delegate) {
-                [self.delegate candleLidOff];
+            if (completionBlock) {
+                completionBlock(kFlameLidOff);
             }
         }
     } else {
         NSLog(@"Candle blow stable");
-        if (self.delegate) {
-            [self.delegate candleLidStable];
+        if (completionBlock) {
+            completionBlock(kFlameLidStable);
         }
     }
 }
