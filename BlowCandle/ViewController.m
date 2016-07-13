@@ -7,15 +7,10 @@
 //
 
 #import "ViewController.h"
-@import AVFoundation;
-
-#define THRESHOLD -0.04
+#import "CandleAnimation.h"
 
 @implementation ViewController {
-    AVAudioRecorder *recorder;
-    double lowPassResults;
-    NSTimer *levelTimer;
-    IBOutlet UIImageView *imgViewflame;
+    IBOutlet UIImageView *__weak imgViewflame;
     NSMutableArray *arrayLow, *arraySmoke;
 }
 
@@ -36,71 +31,14 @@
         [arraySmoke addObject:[UIImage imageNamed:imgName]];
     }
 
-    
-    lowPassResults = 0.0;
-    [self readyToBlow1];
-    NSURL *url = [NSURL fileURLWithPath:@"/dev/null"];
-    NSDictionary *settings = [NSDictionary dictionaryWithObjectsAndKeys:
-                              [NSNumber numberWithFloat: 44100.0],                 AVSampleRateKey,
-                              [NSNumber numberWithInt: kAudioFormatAppleLossless], AVFormatIDKey,
-                              [NSNumber numberWithInt: 1],                         AVNumberOfChannelsKey,
-                              [NSNumber numberWithInt: AVAudioQualityMax],         AVEncoderAudioQualityKey,
-                              nil];
-    
-    NSError *error;
-    
-    recorder = [[AVAudioRecorder alloc] initWithURL:url settings:settings error:&error];
-    if (recorder) {
-        [recorder prepareToRecord];
-        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
-        [[AVAudioSession sharedInstance] setActive:YES error:nil];
-        recorder.meteringEnabled = YES;
-        [recorder record];
-        levelTimer = [NSTimer scheduledTimerWithTimeInterval:0.05
-                                                      target:self
-                                                    selector:@selector(levelTimerCallback:)
-                                                    userInfo:nil
-                                                     repeats:YES];
-    } else {
-        NSLog(@"%@", [error description]);
-    }
-}
-
-- (void)readyToBlow1 {
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
-    [[AVAudioSession sharedInstance] setActive:YES error:nil];
-}
-
-- (void)levelTimerCallback:(NSTimer *)timer {
-    [recorder updateMeters];
-    
-    float peakPower = [recorder peakPowerForChannel:0];
-    NSLog(@"power = %f", peakPower);
-    
-    if (peakPower > -3) {
-        [self setImageLow];
-        if (peakPower > THRESHOLD) {
-            NSLog(@"Candle blow off");
-//            [levelTimer invalidate];
-            [self setImageSmoke];
-        }
-    }
-}
-
-- (void)setImageLow {
-    NSLog(@"Low");
-    if (!imgViewflame.isAnimating) {
-        [imgViewflame setAnimationImages:arrayLow];
-        [imgViewflame setAnimationRepeatCount:1];
-        [imgViewflame startAnimating];
-    }
-}
-
-- (void)setImageSmoke {
-    NSLog(@"Smoke");
-    [imgViewflame setAnimationImages:arraySmoke];
-    [imgViewflame setAnimationRepeatCount:2];
-    [imgViewflame startAnimating];
+    CandleAnimation *candleAnimation = [CandleAnimation new];
+    [candleAnimation setFlame:imgViewflame
+                 stableImages:@[[UIImage imageNamed:@"flame_full_0"]]
+                   blowImages:arrayLow
+                  smokeImages:arraySmoke];
+    [candleAnimation startAnimations:^{
+        NSLog(@"yupieee now run more animations");
+    }];
 }
 
 @end
