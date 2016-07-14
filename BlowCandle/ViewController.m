@@ -11,11 +11,23 @@
 
 @implementation ViewController {
     IBOutlet UIImageView *__weak imgViewflame;
-    NSMutableArray *arrayLow, *arraySmoke;
+    NSMutableArray *arrayLow, *arraySmoke, *arrayStable;
+    CandleAnimation *candleAnimation;
+    IBOutlet UIButton *__weak btnStart;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    arrayStable = [NSMutableArray new];
+    for (int i = 1; i <= 8; i++) {
+        NSString *imgName = [NSString stringWithFormat:@"flame_%d", i];
+        [arrayStable addObject:[UIImage imageNamed:imgName]];
+    }
+    for (int i = 7; i > 0; i--) {
+        NSString *imgName = [NSString stringWithFormat:@"flame_%d", i];
+        [arrayStable addObject:[UIImage imageNamed:imgName]];
+    }
     
     arrayLow = [NSMutableArray new];
     for (int i = 1; i <= 25; i++) {
@@ -25,18 +37,23 @@
     }
     
     arraySmoke = [NSMutableArray new];
-    for (int i = 1; i <= 39; i++) {
+    for (int i = 1; i <= 40; i++) {
         NSString *imgName = [NSString stringWithFormat:@"smoke_%d", i];
         NSLog(@"smoke %@", imgName);
         [arraySmoke addObject:[UIImage imageNamed:imgName]];
     }
 
-    CandleAnimation *candleAnimation = [CandleAnimation new];
+    candleAnimation = [CandleAnimation new];
     [candleAnimation setFlame:imgViewflame
-                 stableImages:@[[UIImage imageNamed:@"flame_1"]]
+                 stableImages:arrayStable
                    blowImages:arrayLow
                   smokeImages:arraySmoke];
+}
+
+- (IBAction)btnStartTapped:(id)sender {
+    btnStart.enabled = NO;
     [candleAnimation startAnimations:^{
+        btnStart.enabled = YES;
         NSLog(@"yupieee now run more animations");
     }];
 }

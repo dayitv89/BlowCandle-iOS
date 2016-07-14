@@ -36,8 +36,10 @@
 
 - (void)startAnimations:(myCompletion)complete {
     completion = complete;
+    [self setImageStable];
     microphoneBlow = [[MicrophoneBlow alloc] init];
     [microphoneBlow prepare];
+    [microphoneBlow setThreshold:-1.2];
     [microphoneBlow start:0.1f
            andCompletions:^(MicrophoneBlowState state) {
         switch (state) {
@@ -62,26 +64,36 @@
     NSLog(@"Stable");
     if (!self.imgViewFlame.isAnimating) {
         [self.imgViewFlame setAnimationImages:self.arrStableImages];
-        [self.imgViewFlame setAnimationRepeatCount:1];
+        [self.imgViewFlame setAnimationRepeatCount:0];
         [self.imgViewFlame startAnimating];
     }
 }
 
 - (void)setImageBlow {
     NSLog(@"Blow");
-    if (!self.imgViewFlame.isAnimating) {
+//    if (!self.imgViewFlame.isAnimating) {
         [self.imgViewFlame setAnimationImages:self.arrBlowImages];
-        [self.imgViewFlame setAnimationDuration:4.0];
+//        [self.imgViewFlame setAnimationDuration:4.0];
         [self.imgViewFlame setAnimationRepeatCount:1];
         [self.imgViewFlame startAnimating];
-    }
+//    }
 }
 
 - (void)setImageSmoke {
     NSLog(@"Smoke");
+    if (self.imgViewFlame.isAnimating) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self blowoff];
+        });
+    } else {
+        [self blowoff];
+    }
+}
+
+- (void)blowoff {
     [self.imgViewFlame setImage:self.arrSmokeImages[self.arrSmokeImages.count-1]];
     [self.imgViewFlame setAnimationImages:self.arrSmokeImages];
-    [self.imgViewFlame setAnimationDuration:4.0];
+    //    [self.imgViewFlame setAnimationDuration:4.0];
     [self.imgViewFlame setAnimationRepeatCount:1];
     [self.imgViewFlame startAnimating];
 }

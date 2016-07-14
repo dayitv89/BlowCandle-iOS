@@ -13,13 +13,26 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" image="flame_1" id="7ba-nd-d8m">
-                                <rect key="frame" x="0.0" y="55" width="320" height="445"/>
+                                <rect key="frame" x="123" y="116" width="73" height="120"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" image="burger_candle" id="3z4-gY-rVG">
+                                <rect key="frame" x="40" y="71" width="240" height="426"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="jrr-wB-Z6z">
+                                <rect key="frame" x="123" y="33" width="47" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="START"/>
+                                <connections>
+                                    <action selector="btnStartTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="usC-a6-Pfj"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="btnStart" destination="jrr-wB-Z6z" id="e6P-C9-XrT"/>
                         <outlet property="imgViewflame" destination="7ba-nd-d8m" id="LMW-Jt-zM0"/>
                     </connections>
                 </viewController>
@@ -29,6 +42,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="flame_1" width="720" height="1280"/>
+        <image name="burger_candle" width="720" height="1280"/>
+        <image name="flame_1" width="220" height="360"/>
     </resources>
 </document>
