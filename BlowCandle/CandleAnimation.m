@@ -39,7 +39,7 @@
     [self setImageStable];
     microphoneBlow = [[MicrophoneBlow alloc] init];
     [microphoneBlow prepare];
-    [microphoneBlow setThreshold:-1.2];
+    [microphoneBlow setThreshold:-1.6];
     [microphoneBlow start:0.1f
            andCompletions:^(MicrophoneBlowState state) {
         switch (state) {
@@ -61,7 +61,7 @@
 
 #pragma mark - Animation images
 - (void)setImageStable {
-    NSLog(@"Stable");
+//    NSLog(@"Stable");
     if (!self.imgViewFlame.isAnimating) {
         [self.imgViewFlame setAnimationImages:self.arrStableImages];
         [self.imgViewFlame setAnimationRepeatCount:0];
@@ -70,11 +70,11 @@
 }
 
 - (void)setImageBlow {
-    NSLog(@"Blow");
+//    NSLog(@"Blow");
 //    if (!self.imgViewFlame.isAnimating) {
         [self.imgViewFlame setAnimationImages:self.arrBlowImages];
-//        [self.imgViewFlame setAnimationDuration:4.0];
-        [self.imgViewFlame setAnimationRepeatCount:1];
+//        [self.imgViewFlame setAnimationDuration:2.0];
+        [self.imgViewFlame setAnimationRepeatCount:2];
         [self.imgViewFlame startAnimating];
 //    }
 }

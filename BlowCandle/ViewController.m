@@ -20,14 +20,14 @@
     [super viewDidLoad];
     
     arrayStable = [NSMutableArray new];
-    for (int i = 1; i <= 8; i++) {
+    for (int i = 1; i <= 4; i++) {
         NSString *imgName = [NSString stringWithFormat:@"flame_%d", i];
         [arrayStable addObject:[UIImage imageNamed:imgName]];
     }
-    for (int i = 7; i > 0; i--) {
-        NSString *imgName = [NSString stringWithFormat:@"flame_%d", i];
-        [arrayStable addObject:[UIImage imageNamed:imgName]];
-    }
+//    for (int i = 1; i > 5; i--) {
+//        NSString *imgName = [NSString stringWithFormat:@"flame_%d", i];
+//        [arrayStable addObject:[UIImage imageNamed:imgName]];
+//    }
     
     arrayLow = [NSMutableArray new];
     for (int i = 1; i <= 25; i++) {

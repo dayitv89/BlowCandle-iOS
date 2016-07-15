@@ -8,6 +8,8 @@
 
 #import "MicrophoneBlow.h"
 
+#define WAVELENGTH_COUNT 5
+
 @implementation MicrophoneBlow {
     CGFloat THRESHOLD;
     StateCompletion completionBlock;
@@ -63,22 +65,31 @@
 - (void)levelTimerCallback:(NSTimer *)timer {
     [recorder updateMeters];
     
-    float peakPower = [recorder peakPowerForChannel:0];
+    float peakPower = [recorder averagePowerForChannel:0];
     NSLog(@"power = %f", peakPower);
+    static int wavecount = 0;
     
     if (peakPower > -3) {
-        NSLog(@"Candle blow moments");
-        if (completionBlock) {
-            completionBlock(kFlameLidMovement);
+        wavecount++;
+        if (wavecount == 1)  {
+            NSLog(@"Candle blow moments");
+            if (completionBlock) {
+                completionBlock(kFlameLidMovement);
+            }
         }
         if (peakPower > THRESHOLD) {
-            NSLog(@"Candle blow off");
-            [self stop];
-            if (completionBlock) {
-                completionBlock(kFlameLidOff);
+            NSLog(@"wavelength %d", wavecount);
+            if (wavecount > WAVELENGTH_COUNT) {
+                wavecount = 0;
+                NSLog(@"Candle blow off");
+                [self stop];
+                if (completionBlock) {
+                    completionBlock(kFlameLidOff);
+                }
             }
         }
     } else {
+        wavecount = 0;
         NSLog(@"Candle blow stable");
         if (completionBlock) {
             completionBlock(kFlameLidStable);
