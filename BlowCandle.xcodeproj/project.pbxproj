@@ -13,6 +13,8 @@
 		A4214C3E1CD24C9900CE8C35 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4214C3C1CD24C9900CE8C35 /* Main.storyboard */; };
 		A4214C401CD24C9900CE8C35 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A4214C3F1CD24C9900CE8C35 /* Assets.xcassets */; };
 		A4214C431CD24C9900CE8C35 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4214C411CD24C9900CE8C35 /* LaunchScreen.storyboard */; };
+		A42816EB1D35FC0600115981 /* MicrophoneBlow.m in Sources */ = {isa = PBXBuildFile; fileRef = A42816EA1D35FC0600115981 /* MicrophoneBlow.m */; };
+		A42816EE1D35FF9300115981 /* CandleAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = A42816ED1D35FF9300115981 /* CandleAnimation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,10 @@
 		A4214C3F1CD24C9900CE8C35 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A4214C421CD24C9900CE8C35 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A4214C441CD24C9900CE8C35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A42816E91D35FC0600115981 /* MicrophoneBlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MicrophoneBlow.h; sourceTree = "<group>"; };
+		A42816EA1D35FC0600115981 /* MicrophoneBlow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MicrophoneBlow.m; sourceTree = "<group>"; };
+		A42816EC1D35FF9300115981 /* CandleAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CandleAnimation.h; sourceTree = "<group>"; };
+		A42816ED1D35FF9300115981 /* CandleAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CandleAnimation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +73,10 @@
 				A4214C411CD24C9900CE8C35 /* LaunchScreen.storyboard */,
 				A4214C441CD24C9900CE8C35 /* Info.plist */,
 				A4214C331CD24C9900CE8C35 /* Supporting Files */,
+				A42816E91D35FC0600115981 /* MicrophoneBlow.h */,
+				A42816EA1D35FC0600115981 /* MicrophoneBlow.m */,
+				A42816EC1D35FF9300115981 /* CandleAnimation.h */,
+				A42816ED1D35FF9300115981 /* CandleAnimation.m */,
 			);
 			path = BlowCandle;
 			sourceTree = "<group>";
@@ -152,6 +162,8 @@
 				A4214C3B1CD24C9900CE8C35 /* ViewController.m in Sources */,
 				A4214C381CD24C9900CE8C35 /* AppDelegate.m in Sources */,
 				A4214C351CD24C9900CE8C35 /* main.m in Sources */,
+				A42816EB1D35FC0600115981 /* MicrophoneBlow.m in Sources */,
+				A42816EE1D35FF9300115981 /* CandleAnimation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
